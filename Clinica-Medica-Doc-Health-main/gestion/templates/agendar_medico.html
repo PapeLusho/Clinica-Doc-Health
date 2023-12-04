@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Clinica DocHealth | Agendar Medico
+{% endblock %}
+
+{% load static %}
+
+{% block javascript  %}
+    
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectEspecialidad = document.getElementById("id_es");
+        const recargarTablaButton = document.getElementById("recargar-tabla");
+
+        recargarTablaButton.addEventListener("click", function () {
+            const especialidadSeleccionada = selectEspecialidad.value;
+
+            const medicoRows = document.querySelectorAll(".medico-row");
+
+            medicoRows.forEach(function (row) {
+                const especialidadMedico = row.getAttribute("data-especialidad");
+                if (especialidadSeleccionada === "0" || especialidadSeleccionada === especialidadMedico) {
+                    row.style.display = "table-row";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+
+
+
+
+{% block body %}   
+
+<h1 class="text-white">Agenda Un Medico De Tu Preferencia</h1>  
+<br>
+
+<select name="id" id="id_es" class="form-control">
+    <option value="1">Odontologia</option>
+    <option value="2">Cardiología</option>
+    <option value="3">Anestesiología</option>
+</select>
+
+<br>
+
+<button id="recargar-tabla" class="btn btn-primary">Recargar Tabla</button>
+
+<br><br>
+
+<table class="table table-striped table-light">
+    <thead class="thead-light">
+        <tr>
+            <th>Rut</th>
+            <th>Sucursal</th>
+            <th>Nombre del Médico</th>
+            <th>Agendar</th> 
+        </tr>
+    </thead>
+    <tbody>
+        {% for medico in medicos %}
+            <tr class="medico-row" data-especialidad="{{ medico.especialidad }}">
+                <td>{{ medico.rut }}</td>
+                <td>
+                    {% if medico.sucursal == 1 %}
+                        San Maria
+                    {% elif medico.sucursal == 2 %}
+                        Salvacion
+                    {% elif medico.sucursal == 3 %}
+                        Ultimo Respiro
+                    {% endif %}
+                </td>
+                <td >{{ medico.nombre }} {{medico.apellido}}</td>
+                <td>
+                    <a href="{% url 'agendar_cita' medico.rut medico.nombre medico.apellido %}" class="btn btn-primary">Agendar Cita</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 class="text-white">
+    {{error_msg}}
+</h3>
+
+{% endblock %}     

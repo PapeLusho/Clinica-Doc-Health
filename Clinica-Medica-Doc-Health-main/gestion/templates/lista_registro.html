@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Clinica DocHealth | Lista Registro
+{% endblock %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container center">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-white">Registro de Usuarios</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <img src="{% static 'core/img/paciente.png' %}" class="card-img-top" alt="Imagen de Paciente">
+                        <div class="card-body">
+                            <h5 class="card-title" >Registro de Paciente</h5>
+                            <p class="card-text">Regístrate como paciente</p>
+                            <a href="{% url 'registro' %}" class="btn btn-success btn-block">Registrarse</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <img src="{% static 'core/img/doctor.png' %}" class="card-img-top" alt="Imagen de Médico">
+                        <div class="card-body">
+                            <h5 class="card-title">Registro de Médico</h5>
+                            <p class="card-text">Regístrate como médico</p>
+                            <a href="{% url 'registro_medico' %}" class="btn btn-dark btn-block">Registrarse</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+ 

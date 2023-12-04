@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Clinica DocHealth | Login
+{% endblock %}
+
+{% load static %}
+
+{% block body %}   
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group" >
+            <label for="{{ form.email.id_for_label }}" class="text-white">Email:</label>
+            {{ form.email }}
+        </div>
+        <br><br>
+        <div class="form-group">
+            <label for="{{ form.contraseña.id_for_label }}" class="text-white">Contraseña:</label>
+            {{ form.contraseña }}
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    </form>
+
+    <h1 class="text-white">
+    {{error_message}}
+    <br>
+    {{mensaje}}
+    </h1>
+{% endblock %}     

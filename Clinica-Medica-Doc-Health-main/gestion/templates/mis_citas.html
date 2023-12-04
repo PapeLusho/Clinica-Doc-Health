@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Clinica DocHealth | Mis Citas
+{% endblock %}
+
+{% block body %}   
+
+<h1 class="text-white">Mis Citas</h1>  
+
+<table class="table table-striped table-light">
+    <thead class="thead-light">
+        <tr>
+            <th>Id</th>
+            <th>Bloque</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Rut Medico</th>
+            <th>Rut Paciente</th>
+            <th>Estado a cambiar</th>
+            <th>Cambiar</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for i in citas %}
+            <tr>
+                <td>{{ i.id }}</td>
+
+                    {% if i.id_bloque == 1 %}
+                        <td>08:00:00	09:00:00</td>
+                    {% elif i.id_bloque == 2 %}
+                        <td>09:00:00	10:00:00</td>
+                    {% elif i.id_bloque == 3 %}
+                        <td>10:00:00	11:00:00</td>
+                    {% elif i.id_bloque == 4 %}
+                        <td>11:00:00	12:00:00</td>
+                    {% elif i.id_bloque == 5 %}
+                        <td>12:00:00	13:00:00</td>
+                    {% elif i.id_bloque == 6 %}
+                        <td>13:00:00	14:00:00</td>
+                    {% elif i.id_bloque == 7 %}
+                        <td>14:00:00	15:00:00</td>
+                    {% elif i.id_bloque == 8 %}
+                        <td>15:00:00	16:00:00</td>
+                    {% elif i.id_bloque == 9 %}
+                        <td>16:00:00	17:00:00</td>
+                    {% elif i.id_bloque == 10 %}
+                        <td>17:00:00	18:00:00</td>
+                    {% endif %}
+                    
+                <td>{{i.fecha_disponibilidad}}</td>
+
+
+                <td>
+                    {% if i.id_estado == 4 %}
+                        Programado
+                    {% elif i.id_estado == 5 %}
+                        Confirmada
+                    {% elif i.id_estado == 6 %}
+                        Anulada
+                    {% elif i.id_estado == 7 %}
+                        Completada
+                    {% endif %}
+                </td>
+                <td>{{ i.rut_medico }}</td>
+                <td>{{ i.rut_paciente }}</td>
+                <td>
+                    <form method="POST" action="{% url 'cambiar_cita' i.id %}">
+                        {% csrf_token %}
+                        <select name="estado" id="estado" class="form-control">
+                            <option value="6">Anulada</option>
+                        </select>
+                        <td>
+                            <button type="submit" class="btn btn-primary">Cambiar estado</button>
+                        </td>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 class="text-white">
+    {{error_msg}}
+</h3>
+
+{% endblock %}     

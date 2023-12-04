@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Clinica DocHealth | Home
+{% endblock %}
+
+{% load static %}
+
+
+
+
+{% block body %}   
+
+<h1 class="text-white">Clínica Doc Health</h1>
+
+<h3 class="text-white">{{msj}}</h3>
+
+{% if mensaje %}
+    <div class="alert alert-success">{{ mensaje }} {{rut_paciente}}</div>
+{% endif %}
+
+
+{% endblock %}     

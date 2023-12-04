@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Clinica DocHealth | Agendar Cita
+{% endblock %}
+
+{% load static %}
+
+{% block css %}
+
+{% endblock %}
+    
+{% block body %}
+
+<h1 class="text-white">Agendar Cita Con Medico <br>{{nombreMed}} {{apellidoMed}} <br>Rut: {{ rut }}</h1>
+<br>
+
+<form method="POST" action="{% url 'agendar_cita' rut nombreMed apellidoMed %}">
+    {% csrf_token %}
+    <select name="fecha" id="fecha" class="form-control">
+        {% for date in unique_dates %}
+            <option value="{{ date }}" {% if date == selected_date %} selected{% endif %}>{{ date }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <button type="submit" class="btn btn-primary">Buscar Disponibilidad</button>
+</form>
+
+<h2 class="text-white">{{ error_msg }}</h2>
+
+{% if disponibilidad %}
+    <h3 class="text-white">Disponibilidad para la fecha {{ selected_date }}</h3>
+    <table class="table table-striped table-light">
+    <thead class="thead-light">
+        <tr>
+            <th>id</th>
+            <th>bloque</th>
+            <th>fecha</th>
+            <th>Agendar Hora</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in disponibilidad %}
+        <tr>
+
+                {% if item.fecha == selected_date %}
+                <tr>
+                    <td> {{item.id}} </td>
+                    {% if item.id_bloque == 1 %}
+                        <td>08:00:00        	09:00:00</td>
+                    {% elif item.id_bloque == 2 %}
+                        <td>09:00:00	        10:00:00</td>
+                    {% elif item.id_bloque == 3 %}
+                        <td>10:00:00        	11:00:00</td>
+                    {% elif item.id_bloque == 4 %}
+                        <td>11:00:00        	12:00:00</td>
+                    {% elif item.id_bloque == 5 %}
+                        <td>12:00:00        	13:00:00</td>
+                    {% elif item.id_bloque == 6 %}
+                        <td>13:00:00        	14:00:00</td>
+                    {% elif item.id_bloque == 7 %}
+                        <td>14:00:00        	15:00:00</td>
+                    {% elif item.id_bloque == 8 %}
+                        <td>15:00:00        	16:00:00</td>
+                    {% elif item.id_bloque == 9 %}
+                        <td>16:00:00        	17:00:00</td>
+                    {% elif item.id_bloque == 10 %}
+                        <td>17:00:00        	18:00:00</td>
+                    {% endif %}
+                
+                    <td>
+                        {{ item.fecha }}
+                    </td>
+                    <td>
+                        {% if item.estado == True %}
+                        <form method="POST" action="{% url 'agendar_cita2' rut item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Agendar Cita</button>
+                        </form>
+                        {% else %}
+                            No disponible :(
+                        {% endif%}
+                    </td>
+                </tr>
+                {% endif %}
+
+        {% endfor %}
+
+{% endif %}
+
+<h3 class="text-white">
+    {{error_msg}}
+</h3>
+
+
+{% endblock %}
+
+
+    
+
+<!-- <label for="fecha">Selecciona una fecha:</label>
+        <select id="fecha" name="fecha">
+          {% for fecha in disponibilidad %}
+            <option value="{{ fecha.id }}">{{ fecha.fecha }}</option>
+          {% endfor %}
+        </select>
+
+        <br>
+    <table class="table table-striped table-light">
+        <thead class="thead-light">
+            <tr>
+                <th>bloque</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in disponibilidad %}
+                <tr>
+                    {% if i.id_bloque == 1 %}
+                        <td>08:00:00	09:00:00</td>
+                    {% elif i.id_bloque == 2 %}
+                        <td>09:00:00	10:00:00</td>
+                    {% elif i.id_bloque == 3 %}
+                        <td>10:00:00	11:00:00</td>
+                    {% elif i.id_bloque == 4 %}
+                        <td>11:00:00	12:00:00</td>
+                    {% elif i.id_bloque == 5 %}
+                        <td>12:00:00	13:00:00</td>
+                    {% elif i.id_bloque == 6 %}
+                        <td>13:00:00	14:00:00</td>
+                    {% elif i.id_bloque == 7 %}
+                        <td>14:00:00	15:00:00</td>
+                    {% elif i.id_bloque == 8 %}
+                        <td>15:00:00	16:00:00</td>
+                    {% elif i.id_bloque == 9 %}
+                        <td>16:00:00	17:00:00</td>
+                    {% elif i.id_bloque == 10 %}
+                        <td>17:00:00	18:00:00</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table> -->
+ 

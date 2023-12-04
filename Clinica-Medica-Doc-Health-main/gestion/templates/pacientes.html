@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Clinica DocHealth | Pacientes
+{% endblock %}
+
+{% load static %}
+
+
+{% block body %}   
+
+<h1 class="text-white">Pacientes</h1>  
+
+
+<table class="table table-striped table-light">
+    <thead class="thead-light">
+        <tr>
+            <th>Rut</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for i in pacientes %}
+            <tr>
+                <td>{{ i.rut }}</td>
+                <td>{{ i.nombre }}</td>
+                <td>{{ i.apellido }}</td>
+                <td>{{ i.usuario }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.direccion }}</td>
+                <td>{{ i.telefono }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<h3 class="text-white">
+    {{mensaje}}
+
+    {{error_msg}}
+</h3>
+{% endblock %}     
